@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: Spring Boot Fast Dev
+
+  # Database settings
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_fastdev
+    username: root
+    password: mysql
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
