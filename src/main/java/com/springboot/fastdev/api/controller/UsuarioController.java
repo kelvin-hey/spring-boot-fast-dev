@@ -1,37 +1,31 @@
 package com.springboot.fastdev.api.controller;
 
-import com.springboot.fastdev.domain.model.Usuario;
-import com.springboot.fastdev.domain.repository.UsuarioRepository;
-import com.springboot.fastdev.domain.service.UsuarioService;
-import com.springboot.fastdev.domain.exception.EntidadeNaoEncontradaException;
-import com.springboot.fastdev.domain.exception.EntidadeEmUsoException;
+import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-import java.util.Optional;
+import com.springboot.fastdev.domain.model.Usuario;
+import com.springboot.fastdev.domain.service.UsuarioService;
 
 @Controller
 @RequestMapping("/usuarios")
 public class UsuarioController {   
     
+	@Autowired
+	private UsuarioService usuarioService;				
+	
     @GetMapping
     public String usuarios(Model model) {
-    
-    	List<Usuario> listaUsuarios = List.of(
-    		new Usuario("Kelvin", "kelvin@email.com"),
-    		new Usuario("John", "john@email.com"),
-    		new Usuario("Susan", "susan@email.com")
-    	);
+       
+    	List<Usuario> listaUsuarios = usuarioService.listar();
     	
     	model.addAttribute("titulo", "Controle de Usuários");
     	model.addAttribute("usuarios", listaUsuarios);
+    	model.addAttribute("totalUsers", String.valueOf(listaUsuarios.size()));       
     	
     	return "usuarios";
     }
